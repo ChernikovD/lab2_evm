@@ -1,0 +1,41 @@
+    1  00  40      IN 0
+    2  01  18  28  STOR a,A
+    3  03  41      IN 1
+    4  04  18  29  STOR a,X
+    5  06  42      IN 2
+    6  07  18  2a  STOR a,Y
+    7  09  38      XCHG
+    8  0a  90  01  MUI a,1
+    9  0c  a0  02  DVI a,2
+   10  0e  59  29  ADM b,X
+   11  10  38      XCHG
+   12  11  11  28  LOAD b,A
+   13  13  b0  00  CMI a,0
+   14  15  ba  23  JZ EXIT
+   15  17  20      MLOOP: PUSH a
+   16  18  88  28  MUM a,A
+   17  1a  28      POP a
+   18  1b  78  01  SBI a,1
+   19  1d  b0  01  CMI a,1
+   20  1f  ba  25  JZ RESULT
+   21  21  b8  17  JMP MLOOP
+   22  23  31  01  EXIT: MVI b,1
+   23  25  38      RESULT: XCHG
+   24  26  4b      OUT 3
+   25  27  f8      STOP
+   26  28  00      A:.DS 1
+   27  29  00      X:.DS 1
+   28  2a  00      Y:.DS 1
+
+    ***** Таблица перекрестных ссылок *****
+  имя     определение     ссылки
+
+ Y        2a              8                                                    
+ X        29              f   5                                                
+ RESULT   25              20                                                   
+ MLOOP    17              22                                                   
+ EXIT     23              16                                                   
+ A        28              19  12  2                                            
+
+  **** Не обнаружено ошибок. Успешное завершение ****
+

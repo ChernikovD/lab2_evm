@@ -1,0 +1,21 @@
+IN 0		; ввод A
+STOR a,A
+IN 1		; ввод B
+STOR a,B
+IN 2		; ввод C
+STOR a,C
+IN 3		; ввод D
+STOR a,D
+LOAD b,B	; rB = B
+SBM b,C		; rB = B - C
+MUM a,D		; rB = (B - C) * D
+MUM a,D		; rB = (B - C) * D^2
+ADM b,A		; rB = (B - C) * D^2 + A
+XCHG		; rB <=> rA
+OUT 4
+STOP
+A:.DS 1
+B:.DS 1
+C:.DS 1
+D:.DS 1
+

@@ -1,0 +1,28 @@
+IN 0		
+STOR a,A
+IN 1		
+STOR a,X
+IN 2		
+STOR a,Y
+XCHG		
+MUI a,1			
+DVI a,2			
+ADM b,X		
+XCHG		
+LOAD b,A	
+CMI a,0			
+JZ EXIT		
+SBI a,1 	
+MLOOP: PUSH a	
+MUM a,A		
+POP a		
+LOOP a,MLOOP
+JMP ENDLOOP	
+EXIT: MVI b,1
+ENDLOOP: XCHG	
+OUT 3
+STOP
+A:.DS 1
+X:.DS 1
+Y:.DS 1
+

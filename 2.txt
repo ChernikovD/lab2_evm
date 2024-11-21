@@ -1,0 +1,31 @@
+IN 0		; ввод A
+STOR a,A
+IN 1		; ввод B
+STOR a,B
+IN 2		; ввод C
+STOR a,C
+IN 3		; ввод F
+STOR a,F
+LOAD b,C	; rB = C
+MUM a,B		; rB = C * B
+ADM b,A		; rB = (C * B) + A
+PUSH B		; сохраняем rB в стеке
+LOAD a,F	; rA = F
+CMI a,0		; rA == 0?
+JZ ZERO
+XCHG		; rA <=> rB
+POP b		; достаем из вершины стека в rB
+MUI a,1		; расширяем знак
+DVM a,F		; rB = (C * B) + A / F
+ZERO: XCHG	; rA <=> rB
+OUT 4
+STOP
+A:.DS 1
+B:.DS 1
+C:.DS 1
+F:.DS 1
+
+
+
+
+

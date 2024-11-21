@@ -1,0 +1,29 @@
+IN 0 		; ввод A	
+STOR a,A
+IN 1		; ввод X	
+STOR a,X
+IN 2		; ввод Y	
+STOR a,Y
+XCHG		; rA <=> rB	
+MUI a,1		; расширяем знак	
+DVI a,2		; rB = Y/2	
+ADM b,X		; rB = Y/2 + X	
+XCHG		; rA <=> rB
+LOAD b,A	; rB = A
+CMI a,0		; rA == 0?
+JZ EXIT		; если степень равна 0
+MLOOP: PUSH a	; сохраняем rA в стеке
+MUM a,A		; rB = rB * A (в первой итерации A * A)
+POP a		; достаем из вершины стека в rA
+SBI a,1		; уменьшаем счетчик rA на 1
+CMI a,1		; при rA = 1 покидаем цикл
+JZ RESULT
+JMP MLOOP
+EXIT: MVI b,1
+RESULT: XCHG
+OUT 3
+STOP
+A:.DS 1
+X:.DS 1
+Y:.DS 1
+

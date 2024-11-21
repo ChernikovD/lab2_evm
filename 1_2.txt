@@ -1,0 +1,28 @@
+.BASE B
+START: MVI b,START
+IN 0			; ввод A
+STOR a,A
+IN 1			; ввод B
+STOR a,B
+IN 2			; ввод C
+STOR a,C
+IN 3			; ввод D
+STOR a,D		; rA = D
+PUSH b			; сохраняем адрес в стеке
+PUSH a			; сохраняем rA в стеке
+LOAD a,B		; rA = B
+SBM a,C			; rA = B - C
+XCHG			; rA <=> rB
+MUM a,1(sp)		; rB = (B - C) * D
+MUM a,1(sp)		; rB = (B - C) * D^2
+XCHG			; rA <=> rB
+pop b			; достаем из вершины стека в rB
+pop b			; достаем из вершины стека в rB
+ADM a,A			; rA = (B - C) * D^2 + A
+OUT 4
+STOP
+A:.DS 1
+B:.DS 1
+C:.DS 1
+D:.DS 1
+

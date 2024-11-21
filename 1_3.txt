@@ -1,0 +1,17 @@
+IN 0		; ввод A
+PUSH a		; сохраняем rA в стеке
+IN 1		; ввод B	
+MOV b,a		; rB = rA		
+IN 2		; ввод C
+SBR b,a		; rB = B - C
+IN 3		; ввод D
+PUSH a		; сохраняем rA в стеке		
+MUM a,1(sp)	; rB = (B - C) * D	
+MUM a,1(sp)	; rB = (B - C) * D^2
+XCHG		; rA <=> rB
+pop b		; достаем из вершины стека в rB
+pop b		; достаем из вершины стека в rB
+ADR a,b		; rA = (B - C) * D^2 + A
+OUT 4
+STOP
+.END
