@@ -1,0 +1,53 @@
+JMP BEGIN
+MA:.DS 10		; выделяем память
+MB:.DS 3
+N:.DS 1
+BEGIN: IN 0 		; ввод N
+CMI a,0			; N <= 0?
+JNP EXIT
+CMI a,10		; N > 16? (переполнение памяти)
+JP EXIT
+STOR a,N
+MVI b,0
+GETA: PUSH a		; сохраняем кол-во эл. массива в стеке		
+IN 1
+STOR a,MA(b)
+ADI b,01		; увеличиваем индекс на 1
+POP a			; достаем кол-во эл. массива из стека
+LOOP a,GETA
+MVI a,3
+MVI b,0
+LOAD a,N
+MVI b,0
+CHECK: PUSH a		; сохраняем кол-во эл. массива в стеке	
+LOAD a,MA(b)	
+PUSH b			; сохраняем индекс в стеке		
+CMI a,0			; rA < 0?	
+JN NEG					
+CMI a,0			; rA = 0?
+JZ NULL		
+CMI a,0			; rA > 0?
+JP POS		
+NEG: MVI b,0		; +1 в первый элемент массива B
+JMP ADDTOB
+NULL: MVI b,1		; +1 во второй элемент массива B
+JMP ADDTOB
+POS: MVI b,2		; +1 в третий элемент массива B
+ADDTOB: LOAD a,MB(b)
+ADI a,01
+STOR a,MB(b)
+POP b			; достаем индекс из стека
+ADI b,01		; увеличиваем индекс на 1
+POP a			; достаем кол-во эл. массива из стека
+LOOP a,CHECK
+MVI b,0
+LOAD a,MB(b)
+OUT 2			; вывод кол-ва отриц. элементов по каналу 2
+MVI b,1
+LOAD a,MB(b)
+OUT 3			; вывод кол-ва нулевых элементов по каналу 3
+MVI b,2
+LOAD a,MB(b)
+OUT 4			; вывод кол-ва полож. элементов по каналу 4
+EXIT: STOP
+.END
